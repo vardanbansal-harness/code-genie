@@ -1,26 +1,48 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
-export const SharedStyle = ({
-  styleId,
-  styleAsString,
-}: {
+const styleSheetCache = new Map<string, CSSStyleSheet>();
+
+interface SharedStyleProps {
   styleId: string;
   styleAsString?: string;
-}) => {
-  const styleElementRef = useRef<HTMLStyleElement | null>(null);
+}
 
+const SharedStyle = ({ styleId, styleAsString }: SharedStyleProps) => {
   useEffect(() => {
-    if (styleElementRef.current) {
-      const existingStyle = document.getElementById(styleId);
-      if (existingStyle) {
-        styleElementRef.current.replaceWith(existingStyle.cloneNode(true));
-      } else {
-        // Inject style inline
-        styleElementRef.current.innerHTML = styleAsString || "";
-        document.head.appendChild(styleElementRef.current);
-      }
-    }
-  }, [styleId]);
+    const applyStyle = (root: Document | ShadowRoot) => {
+      if (!(root instanceof ShadowRoot)) return;
 
-  return <style ref={styleElementRef} id={styleId}></style>;
+      let styleSheet = styleSheetCache.get(styleId);
+
+      if (!styleSheet && styleAsString) {
+        styleSheet = new CSSStyleSheet();
+        styleSheet.replaceSync(styleAsString);
+        styleSheetCache.set(styleId, styleSheet);
+      }
+
+      if (styleSheet && !root.adoptedStyleSheets.includes(styleSheet)) {
+        root.adoptedStyleSheets = [...root.adoptedStyleSheets, styleSheet];
+      }
+    };
+
+    // Apply styles to all shadow roots in the document
+    const observer = new MutationObserver(() => {
+      document.querySelectorAll("*").forEach((el) => {
+        if (el.shadowRoot) applyStyle(el.shadowRoot);
+      });
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // Initial application of styles
+    document.querySelectorAll("*").forEach((el) => {
+      if (el.shadowRoot) applyStyle(el.shadowRoot);
+    });
+
+    return () => observer.disconnect(); // Cleanup observer on unmount
+  }, [styleId, styleAsString]);
+
+  return null; // No actual DOM output needed
 };
+
+export default SharedStyle;

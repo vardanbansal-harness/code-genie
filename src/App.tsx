@@ -1,6 +1,6 @@
 import "./App.css";
 import ShadowWrapper from "./components/shadow-wrapper";
-import { SharedStyle } from "./components/shared-style";
+import SharedStyle from "./components/shared-style";
 
 // import { Button } from "@harnessio/ui/components";
 
@@ -19,7 +19,7 @@ function App() {
         <p>Hello World!</p>
       </ShadowWrapper>
       <ShadowWrapper>
-        <SharedStyle styleId="custom-style" />
+        <SharedStyle styleId="custom-style" styleAsString={style} />
         <p>42 is the answer to everything...</p>
         <span>Do you know why?</span>
       </ShadowWrapper>
