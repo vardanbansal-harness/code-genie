@@ -19,7 +19,7 @@ function App() {
       </ShadowWrapper>
       <ShadowWrapper>
         <SharedStyle styleId="text-color-red" />
-        <p>Hello World!</p>
+        <p>42 is the answer to everything...</p>
       </ShadowWrapper>
     </div>
   );
