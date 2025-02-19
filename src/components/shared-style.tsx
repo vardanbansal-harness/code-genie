@@ -14,18 +14,20 @@ const SharedStyle = ({ styleId, styleAsString }: SharedStyleProps) => {
 
       let styleSheet = styleSheetCache.get(styleId);
 
+      // If no cached stylesheet exists and we have new styles, create and cache it
       if (!styleSheet && styleAsString) {
         styleSheet = new CSSStyleSheet();
         styleSheet.replaceSync(styleAsString);
         styleSheetCache.set(styleId, styleSheet);
       }
 
+      // Apply cached stylesheet to shadow root
       if (styleSheet && !root.adoptedStyleSheets.includes(styleSheet)) {
         root.adoptedStyleSheets = [...root.adoptedStyleSheets, styleSheet];
       }
     };
 
-    // Apply styles to all shadow roots in the document
+    // Apply styles to existing and future shadow roots
     const observer = new MutationObserver(() => {
       document.querySelectorAll("*").forEach((el) => {
         if (el.shadowRoot) applyStyle(el.shadowRoot);
@@ -34,15 +36,15 @@ const SharedStyle = ({ styleId, styleAsString }: SharedStyleProps) => {
 
     observer.observe(document.body, { childList: true, subtree: true });
 
-    // Initial application of styles
+    // Apply styles to already existing shadow roots
     document.querySelectorAll("*").forEach((el) => {
       if (el.shadowRoot) applyStyle(el.shadowRoot);
     });
 
-    return () => observer.disconnect(); // Cleanup observer on unmount
-  }, [styleId, styleAsString]);
+    return () => observer.disconnect(); // Cleanup on unmount
+  }, [styleId, styleAsString]); // Only re-run when `styleId` or `styleAsString` changes
 
-  return null; // No actual DOM output needed
+  return null;
 };
 
 export default SharedStyle;
