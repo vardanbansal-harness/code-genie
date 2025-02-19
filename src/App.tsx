@@ -4,23 +4,25 @@ import { Button } from "@harnessio/ui/components";
 
 function App() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-6">
+    <div>
       <ShadowWrapper>
-        <Button variant="destructive" onClick={() => alert("clicked")}>
-          Click me
+        <Button variant="destructive" onClick={() => alert("Deleted")}>
+          Delete
         </Button>
       </ShadowWrapper>
       <ShadowWrapper>
-        <Button variant="secondary" onClick={() => alert("clicked")}>
-          Click me
-        </Button>
+        <div className="p-2">
+          <Button variant="secondary" onClick={() => alert("Cancelled")}>
+            Cancel
+          </Button>
+        </div>
       </ShadowWrapper>
       <ShadowWrapper>
-        <h1>First component</h1>
+        <h1>Sample header</h1>
       </ShadowWrapper>
       <ShadowWrapper>
-        <p>Second component</p>
-        <span>This should reuse style</span>
+        <p>Second paragraph</p>
+        <span>Sample text</span>
       </ShadowWrapper>
     </div>
   );
