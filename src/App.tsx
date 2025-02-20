@@ -1,15 +1,18 @@
 import "./App.css";
+import { ShadCNWrapper } from "./components/shadcn-wrapper";
 import ShadowWrapper from "./components/shadow-wrapper";
 import { Button } from "@harnessio/ui/components";
 
 function App() {
   return (
     <div>
-      <ShadowWrapper>
+      {/* <ShadowWrapper> */}
+      <ShadCNWrapper>
         <Button variant="destructive" onClick={() => alert("Deleted")}>
           Delete
         </Button>
-      </ShadowWrapper>
+      </ShadCNWrapper>
+      {/* </ShadowWrapper> */}
       <ShadowWrapper>
         <div className="p-2">
           <Button variant="secondary" onClick={() => alert("Cancelled")}>

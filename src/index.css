@@ -1,1 +1,29 @@
 @import "@harnessio/ui/shared-style-variables.css";
+
+/* button {
+  background-color: green !important;
+  color: white !important;
+  border-radius: 0 !important;
+} */
+
+.shadcn-wrapper * {
+  all: unset;
+}
+
+.shadcn-wrapper button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 16px;
+  background-color: #6366f1; /* Primary */
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.shadcn-wrapper button:hover {
+  background-color: #4f46e5; /* Darker on hover */
+}
