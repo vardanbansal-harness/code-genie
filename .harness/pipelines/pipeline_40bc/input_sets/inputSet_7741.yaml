@@ -1,0 +1,13 @@
+name: inputSet_7741
+remoteGit:
+  connector: vbtokenselforg
+gitBranch: main
+yamlPath: .harness/pipelines/pipeline_40bc/input_sets/inputSet_7741.yaml
+inputs:
+  overlay:
+    stages:
+      - steps:
+          - run: echo 2
+            id: step
+        id: stage
+identifier: inputSet_7741
