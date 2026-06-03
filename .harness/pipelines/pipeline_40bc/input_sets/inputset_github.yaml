@@ -1,0 +1,14 @@
+name: inputSet_github
+remoteGit:
+  storeType: Github
+  connector: vbtokenselforg
+gitBranch: main
+yamlPath: .harness/pipelines/pipeline_40bc/input_sets/inputset_github.yaml
+inputs:
+  overlay:
+    stages:
+      - steps:
+          - run: echo GH
+            id: step
+        id: stage
+identifier: inputset_github
