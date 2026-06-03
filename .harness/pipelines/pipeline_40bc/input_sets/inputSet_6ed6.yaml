@@ -1,0 +1,13 @@
+name: inputSet_6ed6
+remoteGit:
+  connector: vbtokenselforg
+gitBranch: main
+yamlPath: .harness/pipelines/pipeline_40bc/input_sets/inputSet_6ed6.yaml
+inputs:
+  overlay:
+    stages:
+      - steps:
+          - run: echo 0
+            id: step
+        id: stage
+identifier: inputSet_6ed6
