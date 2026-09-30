@@ -1,0 +1,41 @@
+pipeline:
+  name: pipeline_code_genie_build_96fb
+  stages:
+    - id: build
+      name: Build
+      runtime: cloud
+      platform:
+        os: linux
+        arch: amd64
+      clone:
+        enabled: true
+      cache:
+        enabled: true
+      steps:
+        - id: install_dependencies
+          name: Install Dependencies
+          run:
+            container:
+              image: node:20-bookworm
+            shell: bash
+            script: |-
+              node --version
+              npm --version
+              npm ci
+        - id: build_project
+          name: Build Project
+          run:
+            container:
+              image: node:20-bookworm
+            shell: bash
+            script: npm run build
+        - id: lint
+          name: Lint
+          run:
+            container:
+              image: node:20-bookworm
+            shell: bash
+            script: npm run lint
+  identifier: pipeline_code_genie_build_96fb
+  tags:
+    onboarding: "true"
