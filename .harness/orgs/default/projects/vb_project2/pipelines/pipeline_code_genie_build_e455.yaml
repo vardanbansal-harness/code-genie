@@ -1,0 +1,38 @@
+pipeline:
+  id: pipeline_code_genie_build_e455
+  name: pipeline_code_genie_build_e455
+  stages:
+    - id: build
+      name: Build
+      runtime: cloud
+      clone:
+        enabled: true
+      cache:
+        enabled: true
+      steps:
+        - id: install_dependencies
+          name: Install Dependencies
+          run:
+            container:
+              image: node:20-bookworm
+            shell: bash
+            script: |-
+              node --version
+              npm --version
+              npm install
+        - id: build_app
+          name: Build
+          run:
+            container:
+              image: node:20-bookworm
+            shell: bash
+            script: npm run build
+        - id: lint
+          name: Lint
+          run:
+            container:
+              image: node:20-bookworm
+            shell: bash
+            script: npm run lint
+  tags:
+    onboarding: "true"
